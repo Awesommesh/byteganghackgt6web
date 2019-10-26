@@ -1,7 +1,7 @@
 const fs = require('fs');
 const readline = require('readline');
 const {google} = require('googleapis');
-
+/*
 // If modifying these scopes, delete token.json.
 const SCOPES = ['https://www.googleapis.com/auth/calendar.readonly'];
 // The file token.json stores the user's access and refresh tokens, and is
@@ -22,6 +22,7 @@ fs.readFile('credentials.json', (err, content) => {
  * @param {Object} credentials The authorization client credentials.
  * @param {function} callback The callback to call with the authorized client.
  */
+/*
 function authorize(credentials, callback) {
 	const {client_secret, client_id, redirect_uris} = credentials.installed;
 	const oAuth2Client = new google.auth.OAuth2(
@@ -41,6 +42,7 @@ function authorize(credentials, callback) {
  * @param {google.auth.OAuth2} oAuth2Client The OAuth2 client to get token for.
  * @param {getEventsCallback} callback The callback for the authorized client.
  */
+/*
 function getAccessToken(oAuth2Client, callback) {
 	const authUrl = oAuth2Client.generateAuthUrl({
 		access_type: 'offline',
@@ -70,6 +72,7 @@ function getAccessToken(oAuth2Client, callback) {
  * Lists the next 10 events on the user's primary calendar.
  * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
  */
+/*
 function listEvents(auth) {
 	const calendar = google.calendar({version: 'v3', auth});
 	calendar.events.list({
@@ -91,7 +94,7 @@ function listEvents(auth) {
 			console.log('No upcoming events found.');
 		}
 	});
-}
+}*/
 
 const request = require('request'); //For Weather API
 let apiKey = "46f2b22404f803839b2772708544f597";
