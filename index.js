@@ -143,21 +143,3 @@ request(urli, function (err, response, body) {
 		console.log('body:', body);
 	}
 });
-/*
-var express  = require('express');
-var app      = express(); 								// create our app w/ express
-var mongoose = require('mongoose'); 					// mongoose for mongodb
-//var morgan = require('morgan'); 			// log requests to the console (express4)
-//var bodyParser = require('body-parser'); 	// pull information from HTML POST (express4)
-//var methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
-var argv = require('optimist').argv;
-
-mongoose.connect('mongodb://' + argv.be_ip + ':80/my_database');
-app.use('/js', express.static(__dirname + '/js'));
-
-app.get('/', function(req, res) {
-	res.sendfile('main.html'); // load the single view file (angular will handle the page changes on the front-end)
-});
-
-app.listen(8080, argv.fe_ip);
-console.log("App listening on port 8080");*/
