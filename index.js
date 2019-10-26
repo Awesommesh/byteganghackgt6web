@@ -25,8 +25,7 @@ app.use(methodOverride());
 var daySched = [];
 
 app.get('/', function(req, res) {
-	res.sendfile('main.html'); // load the single view file (angular will handle the page changes on the front-end)
-	daySched = [];
+	res.sendfile('main.html'); // load the single view file (angular will handle the page changes on the front-end
 	fs.readFile('credentials.json', (err, content) => {
 		if (err) return console.log('Error loading client secret file:', err);
 		// Authorize a client with credentials, then call the Google Calendar API.
@@ -55,6 +54,7 @@ app.get('/', function(req, res) {
 		}
 	});
 	res.json(daySched);
+	daySched = [];
 });
 
 app.listen(80, argv.fe_ip);
