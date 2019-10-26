@@ -7,6 +7,7 @@ const url = require('url');
 const opn = require('open');
 const destroyer = require('server-destroy');
 const path = require('path');
+var morgan = require('morgan'); 			// log requests to the console (express4)
 var bodyParser = require('body-parser'); 	// pull information from HTML POST (express4)
 var express  = require('express');
 var app      = express(); 								// create our app w/ express
