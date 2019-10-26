@@ -40,7 +40,7 @@ app.get('/', function(req, res) {
 			console.log('error:', error);
 		} else {
 			console.log('body:', body);
-			daySched.push(body);
+			daySched.push(body.weather.value);
 		}
 	});
 	city = "New_York";
