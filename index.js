@@ -23,7 +23,7 @@ app.use(bodyParser.json()); 									// parse application/json
 app.use(methodOverride());
 let daySched = [];
 app.get('/', function(req, res) {
-	res.sendfile('main.html'); // load the single view file (angular will handle the page changes on the front-end)
+	//res.sendfile('main.html'); // load the single view file (angular will handle the page changes on the front-end)
 	fs.readFile('credentials.json', (err, content) => {
 		if (err) return console.log('Error loading client secret file:', err);
 		// Authorize a client with credentials, then call the Google Calendar API.
@@ -63,14 +63,14 @@ const SCOPES = ['https://www.googleapis.com/auth/calendar.readonly'];
 // created automatically when the authorization flow completes for the first
 // time.
 const TOKEN_PATH = 'token.json';
-
+/*
 // Load client secrets from a local file.
 fs.readFile('credentials.json', (err, content) => {
 	if (err) return console.log('Error loading client secret file:', err);
 	// Authorize a client with credentials, then call the Google Calendar API.
 	authorize(JSON.parse(content), listEvents);
 });
-
+*/
 /**
  * Create an OAuth2 client with the given credentials, and then execute the
  * given callback function.
