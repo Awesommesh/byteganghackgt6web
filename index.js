@@ -22,8 +22,38 @@ app.use(bodyParser.urlencoded({'extended':'true'})); 			// parse application/x-w
 app.use(bodyParser.json()); 									// parse application/json
 app.use(methodOverride());
 
+var daySched = [];
+
 app.get('/', function(req, res) {
 	res.sendfile('main.html'); // load the single view file (angular will handle the page changes on the front-end)
+	fs.readFile('credentials.json', (err, content) => {
+		if (err) return console.log('Error loading client secret file:', err);
+		// Authorize a client with credentials, then call the Google Calendar API.
+		authorize(JSON.parse(content), listEvents);
+	});
+	let apiKey = "46f2b22404f803839b2772708544f597";
+	let area = "America";
+	let city = "Atlanta";
+	let urli = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
+	request(urli, function (err, response, body) {
+		if(err){
+			console.log('error:', error);
+		} else {
+			console.log('body:', body);
+			daySched.push(body);
+		}
+	});
+	city = "New_York";
+	urli = `http://worldtimeapi.org/api/timezone/${area}/${city}.txt`;
+	request(urli, function (err, response, body) {
+		if(err){
+			console.log('error:', error);
+		} else {
+			console.log('body:', body);
+			daySched.push(body);
+		}
+	});
+	res.json(daySched);
 });
 
 app.listen(8080, argv.fe_ip);
@@ -37,11 +67,6 @@ const SCOPES = ['https://www.googleapis.com/auth/calendar.readonly'];
 const TOKEN_PATH = 'token.json';
 
 // Load client secrets from a local file.
-fs.readFile('credentials.json', (err, content) => {
-	if (err) return console.log('Error loading client secret file:', err);
-	// Authorize a client with credentials, then call the Google Calendar API.
-	authorize(JSON.parse(content), listEvents);
-});
 
 /**
  * Create an OAuth2 client with the given credentials, and then execute the
@@ -113,33 +138,16 @@ function listEvents(auth) {
 		const events = res.data.items;
 		if (events.length) {
 			console.log('Upcoming 10 events:');
+			daySched.push('Upcoming 10 events:');
 			events.map((event, i) => {
 				const start = event.start.dateTime || event.start.date;
 				console.log(`${start} - ${event.summary}`);
+				daySched.push(`${start} - ${event.summary}`);
 			});
 		} else {
 			console.log('No upcoming events found.');
+			daySched.push('No upcoming events found.');
 		}
 	});
 }
 
-let apiKey = "46f2b22404f803839b2772708544f597";
-let area = "America";
-let city = "Atlanta";
-let urli = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
-request(urli, function (err, response, body) {
-	if(err){
-		console.log('error:', error);
-	} else {
-		console.log('body:', body);
-	}
-});
-city = "New_York";
-urli = `http://worldtimeapi.org/api/timezone/${area}/${city}.txt`;
-request(urli, function (err, response, body) {
-	if(err){
-		console.log('error:', error);
-	} else {
-		console.log('body:', body);
-	}
-});
