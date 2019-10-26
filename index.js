@@ -21,37 +21,14 @@ app.use(morgan('dev')); 										// log every request to the console
 app.use(bodyParser.urlencoded({'extended':'true'})); 			// parse application/x-www-form-urlencoded
 app.use(bodyParser.json()); 									// parse application/json
 app.use(methodOverride());
-let daySched = [];
+
 app.get('/', function(req, res) {
-	//res.sendfile('main.html'); // load the single view file (angular will handle the page changes on the front-end)
+	res.sendfile('main.html'); // load the single view file (angular will handle the page changes on the front-end)
 	fs.readFile('credentials.json', (err, content) => {
 		if (err) return console.log('Error loading client secret file:', err);
 		// Authorize a client with credentials, then call the Google Calendar API.
 		authorize(JSON.parse(content), listEvents);
 	});
-	let apiKey = "46f2b22404f803839b2772708544f597";
-	let area = "America";
-	let city = "Atlanta";
-	let urli = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
-	request(urli, function (err, response, body) {
-		if(err){
-			console.log('error:', error);
-		} else {
-			console.log('body:', body);
-			daySched.push(body);
-		}
-	});
-	city = "New_York";
-	urli = `http://worldtimeapi.org/api/timezone/${area}/${city}.txt`;
-	request(urli, function (err, response, body) {
-		if(err){
-			console.log('error:', error);
-		} else {
-			console.log('body:', body);
-			daySched.push(body);
-		}
-	});
-	res.json(daySched);
 });
 
 app.listen(8080, argv.fe_ip);
@@ -63,14 +40,14 @@ const SCOPES = ['https://www.googleapis.com/auth/calendar.readonly'];
 // created automatically when the authorization flow completes for the first
 // time.
 const TOKEN_PATH = 'token.json';
-/*
+
 // Load client secrets from a local file.
 fs.readFile('credentials.json', (err, content) => {
 	if (err) return console.log('Error loading client secret file:', err);
 	// Authorize a client with credentials, then call the Google Calendar API.
 	authorize(JSON.parse(content), listEvents);
 });
-*/
+
 /**
  * Create an OAuth2 client with the given credentials, and then execute the
  * given callback function.
@@ -143,11 +120,49 @@ function listEvents(auth) {
 			console.log('Upcoming 10 events:');
 			events.map((event, i) => {
 				const start = event.start.dateTime || event.start.date;
-				daySched.push(`${start} - ${event.summary}`);
+				console.log(`${start} - ${event.summary}`);
 			});
 		} else {
-			daySched.push('No upcoming events found.');
+			console.log('No upcoming events found.');
 		}
-		return daySched;
 	});
 }
+
+let apiKey = "46f2b22404f803839b2772708544f597";
+let area = "America";
+let city = "Atlanta";
+let urli = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
+request(urli, function (err, response, body) {
+	if(err){
+		console.log('error:', error);
+	} else {
+		console.log('body:', body);
+	}
+});
+city = "New_York";
+urli = `http://worldtimeapi.org/api/timezone/${area}/${city}.txt`;
+request(urli, function (err, response, body) {
+	if(err){
+		console.log('error:', error);
+	} else {
+		console.log('body:', body);
+	}
+});
+/*
+var express  = require('express');
+var app      = express(); 								// create our app w/ express
+var mongoose = require('mongoose'); 					// mongoose for mongodb
+//var morgan = require('morgan'); 			// log requests to the console (express4)
+//var bodyParser = require('body-parser'); 	// pull information from HTML POST (express4)
+//var methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
+var argv = require('optimist').argv;
+
+mongoose.connect('mongodb://' + argv.be_ip + ':80/my_database');
+app.use('/js', express.static(__dirname + '/js'));
+
+app.get('/', function(req, res) {
+	res.sendfile('main.html'); // load the single view file (angular will handle the page changes on the front-end)
+});
+
+app.listen(8080, argv.fe_ip);
+console.log("App listening on port 8080");*/
