@@ -51,8 +51,7 @@ app.get('/', function(req, res) {
 			daySched.push(body);
 		}
 	});
-	var json = JSON.stringify(daySched);
-	res.sendfile(json);
+	res.json(daySched);
 });
 
 app.listen(8080, argv.fe_ip);
