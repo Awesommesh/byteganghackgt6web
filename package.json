@@ -1,0 +1,23 @@
+{
+  "name": "smartclock",
+  "version": "1.0.0",
+  "description": "Smart Clock WebApp",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Awesommesh/byteganghackgt6web.git"
+  },
+  "author": "Animesh Agrawal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Awesommesh/byteganghackgt6web/issues"
+  },
+  "homepage": "https://github.com/Awesommesh/byteganghackgt6web#readme",
+  "dependencies": {
+    "request": "^2.88.0"
+  }
+}
