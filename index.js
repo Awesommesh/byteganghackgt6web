@@ -58,8 +58,8 @@ app.get('/', function(req, res) {
 	daySched = [];
 });
 
-app.listen(80, argv.fe_ip);
-console.log("App listening on port 80");
+app.listen(8080, argv.fe_ip);
+console.log("App listening on port 8080");
 
 // If modifying these scopes, delete token.json.
 const SCOPES = ['https://www.googleapis.com/auth/calendar.readonly'];
