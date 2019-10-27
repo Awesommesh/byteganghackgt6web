@@ -39,19 +39,19 @@ app.get('/', function(req, res) {
 		if(err){
 			console.log('error:', error);
 		} else {
-			console.log('body:', body);
 			var bodyJson = JSON.parse(body);
-			daySched.push(bodyJson.weather.value);
+			daySched.push(bodyJson.main.temp);
+			daySched.push(bodyJson.weather[0].main);
 		}
 	});
 	city = "New_York";
-	urli = `http://worldtimeapi.org/api/timezone/${area}/${city}.txt`;
+	urli = `http://worldtimeapi.org/api/timezone/${area}/${city}`;
 	request(urli, function (err, response, body) {
 		if(err){
 			console.log('error:', error);
 		} else {
-			console.log('body:', body);
-			daySched.push(body);
+			bodyJson = JSON.parse(body);
+			daySched.push(bodyJson.datetime);
 		}
 	});
 	res.json(daySched);
@@ -139,15 +139,15 @@ function listEvents(auth) {
 		if (err) return console.log('The API returned an error: ' + err);
 		const events = res.data.items;
 		if (events.length) {
-			console.log('Upcoming 10 events:');
+			//console.log('Upcoming 10 events:');
 			daySched.push('Upcoming 10 events:');
 			events.map((event, i) => {
 				const start = event.start.dateTime || event.start.date;
-				console.log(`${start} - ${event.summary}`);
+				//console.log(`${start} - ${event.summary}`);
 				daySched.push(`${start} - ${event.summary}`);
 			});
 		} else {
-			console.log('No upcoming events found.');
+			//console.log('No upcoming events found.');
 			daySched.push('No upcoming events found.');
 		}
 	});
